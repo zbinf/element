@@ -37,9 +37,19 @@ export const t = function(path, options) {
   return '';
 };
 
-export const use = function(l) {
+export const use = function(l, langStr) {
   lang = l || lang;
+  let bodyClass = document.getElementsByTagName('body')[0].classList;
+  const classArr = bodyClass.value.split(' ');
+  if (!langStr) return;
+  if (langStr === 'ar') {
+    const index = classArr.findIndex(el => el === 'element-rtl');
+    if (index === -1) bodyClass.add('element-rtl');
+  } else {
+    bodyClass.remove('element-rtl');
+  }
 };
+
 
 export const i18n = function(fn) {
   i18nHandler = fn || i18nHandler;
