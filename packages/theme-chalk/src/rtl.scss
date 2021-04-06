@@ -1,4 +1,10 @@
 .element-rtl {
+  .el-pagination .btn-next .el-icon,
+  .el-pagination .btn-prev .el-icon {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg)
+  }
+  
   .el-icon--right {
     margin-right: 5px
   }
