@@ -239,3 +239,11 @@ export function objToArray(obj) {
   }
   return isEmpty(obj) ? [] : [obj];
 }
+
+export function isRtl() {
+  const html = document.getElementsByTagName('html');
+  const direction = html[0].style.direction || 'ltr';
+  let result = false;
+  if (direction === 'rtl') result = true;
+  return result;
+}
