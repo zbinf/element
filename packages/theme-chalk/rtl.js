@@ -1,56 +1,62 @@
 const fs = require('fs');
-// const path = require('path');
 
-const fileUrl = './lib/test.css'; // 目标文件
-const filetCopyUrl = './lib/tagCopy.css'; // 目标文件副本
-const resultFile = './lib/testResult.scss'; // 过滤后的文件
+const fileUrl = './lib/index.css'; // 目标文件
+const fileCopyUrl = './lib/fileCopy.css'; // 目标文件副本
+const resultFile = './src/rtl.scss'; // 过滤后的文件
 
 // 过滤的目标字段
 const filterTexts = [
   'left',
   'right',
-  // 'rotateY(0)',
+  'rotateY(0)',
+  'rotate(180deg)',
+  'rotate(0deg)',
+  'translateY(-50%) translateX(100%)',
+  'translateX(0)',
+  'translateX(100%)'
 ];
 let resultData = ''; // 写入文件的数据
-let parent = ''; //.test{ 存储父级字段
+let parent = ''; // .test{ 存储父级字段
 let content = ''; // left: 1px; 存储确定保留的内容
 let cachContent = ''; // widht:1px; 存储待检测内容
-
 
 const getFile = () => {
   resultData = '';
   resetData();
-  fs.readFile(filetCopyUrl, 'utf-8', (err, data) => {
-    if (err) {
-      fs.readFile(fileUrl, 'utf-8', (err, data) => {
-        if (err) return console.error(err);
+  // fs.readFile(fileCopyUrl, 'utf-8', (err, data) => {
+  // if (err) {
+  fs.readFile(fileUrl, 'utf-8', (err, data) => {
+    if (err) return console.error(err);
 
-        writeFile(filetCopyUrl, data, (err) => {
-          // 写入成功
-          if (!err) filterFile(data);
-        })
-      });
-      return;
-    }
-    filterFile(data);
+    writeFile(fileCopyUrl, data, (err) => {
+      // 写入成功
+      if (!err) filterFile(data);
+    });
   });
-}
+  // return;
+  // }
+  // filterFile(data);
+  // });
+};
 
 // 写入文件
 const writeFile = (path, data, callback) => {
-  fs.writeFile(path, data, function (err) {
+  fs.writeFile(path, data, function(err) {
     if (err) return callback(err);
     return callback(null);
-  })
-}
+  });
+};
 
 // 过滤文件
 const filterFile = (data) => {
+  console.log('过滤中....');
+
   for (let i = 0, len = data.length; i < len; i++) {
     const el = data[i];
-    console.log('进度：',i, '/',len);
+    // console.log('进度：',i, '/',len);
 
-    if (el == '}') {
+    if (el === '}') {
+      console.log('进度：', i, '/', len);
       // console.log('} --', cachContent, content);
       if (!cachContent && content) {
         // 有保留数据，赋值给resultData， 并重置
@@ -75,9 +81,9 @@ const filterFile = (data) => {
     }
 
     if (parent.indexOf('{') >= 0) {
-      if (el == ';') {
+      if (el === ';') {
         // 检测cachContent
-        const isHas = filterData(cachContent,2);
+        const isHas = filterData(cachContent, 2);
         if (isHas) {
           content += cachContent;
           content += el;
@@ -96,23 +102,21 @@ const filterFile = (data) => {
     // console.log('parent-', parent);
   }
 
-  console.log('遍历结束--resultData:', resultData);
-
+  // console.log('遍历结束--resultData:', resultData);
+  const info = '.element-rtl{' + resultData + '}';
   // 遍历结束
-  writeFile(resultFile, resultData, (err) => {
+  writeFile(resultFile, info, (err) => {
     // 写入成功
     if (!err) console.log('完成');
-  })
-}
+  });
+};
 
-
-
-// 检测是否包含方向性内容 
+// 检测是否包含方向性内容
 // data: width:1px;
 const filterData = (data, type) => {
   if (!data) return false;
   let isHas = false;
-  console.log('带检测data--', type, data);
+  // console.log('带检测data--', type, data);
   for (let i = 0; i < filterTexts.length; i++) {
     const filterText = filterTexts[i];
     if (data.indexOf(filterText) >= 0) {
@@ -127,20 +131,20 @@ const filterData = (data, type) => {
     dataArr[1] = dataArr[1].trim(); // 去掉前后空格
     const valArr = dataArr[1].split(' ');
 
-    if (valArr.length > 3 && valArr[1] != valArr[3]) {
+    if (valArr.length > 3 && valArr[1] !== valArr[3]) {
       isHas = true;
     }
   }
 
-  console.log('检测filterData--:', data, '结果', isHas);
-  
+  // console.log('检测filterData--:', data, '结果', isHas);
   return isHas;
-}
+};
 
 // 重置数据
 const resetData = () => {
   parent = '';
   content = '';
-  cachContent = '';  
-}
+  cachContent = '';
+};
+
 getFile();

@@ -50,7 +50,6 @@ export const use = function(l, langStr) {
   }
 };
 
-
 export const i18n = function(fn) {
   i18nHandler = fn || i18nHandler;
 };
