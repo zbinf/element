@@ -3829,9 +3829,7 @@ var poperMixins = {
       [$slots.default]
     )]);
 
-    // TODO: rtl镜像 ElSubmenu
-    var iconStyle = Object(util_["isRtl"])() ? 'el-icon-arrow-left' : 'el-icon-arrow-right';
-    var submenuTitleIcon = rootMenu.mode === 'horizontal' && isFirstLevel || rootMenu.mode === 'vertical' && !rootMenu.collapse ? 'el-icon-arrow-down' : iconStyle;
+    var submenuTitleIcon = rootMenu.mode === 'horizontal' && isFirstLevel || rootMenu.mode === 'vertical' && !rootMenu.collapse ? 'el-icon-arrow-down' : 'el-icon-arrow-right';
 
     return h(
       'li',
@@ -4904,13 +4902,7 @@ var shared_ = __webpack_require__(19);
 
       var pendant = pendantMap[place];
       if (this.$slots[pendant]) {
-        // TODO: rtl 镜像 ElInput -start
-        if (Object(util_["isRtl"])()) {
-          el.style.transform = 'translateX(' + ((place === 'suffix' ? '-' : '') + this.$el.querySelector('.el-input-group__' + pendant).offsetWidth) * -1 + 'px)';
-        } else {
-          el.style.transform = 'translateX(' + (place === 'suffix' ? '-' : '') + this.$el.querySelector('.el-input-group__' + pendant).offsetWidth + 'px)';
-        }
-        // rtl 镜像 ElInput -end
+        el.style.transform = 'translateX(' + (place === 'suffix' ? '-' : '') + this.$el.querySelector('.el-input-group__' + pendant).offsetWidth + 'px)';
       } else {
         el.removeAttribute('style');
       }
@@ -23428,18 +23420,15 @@ label_wrap_component.options.__file = "packages/form/src/label-wrap.vue"
       if (this.form.labelPosition === 'top' || this.form.inline) return ret;
       if (!label && !this.labelWidth && this.isNested) return ret;
       var labelWidth = this.labelWidth || this.form.labelWidth;
-      // TODO: rtl 镜像 ElFormItem -start
-      var marginStyle = Object(util_["isRtl"])() ? 'margin-right' : 'margin-left';
       if (labelWidth === 'auto') {
         if (this.labelWidth === 'auto') {
-          ret[marginStyle] = this.computedLabelWidth;
+          ret.marginLeft = this.computedLabelWidth;
         } else if (this.form.labelWidth === 'auto') {
-          ret[marginStyle] = this.elForm.autoLabelWidth;
+          ret.marginLeft = this.elForm.autoLabelWidth;
         }
       } else {
-        ret[marginStyle] = labelWidth;
+        ret.marginLeft = labelWidth;
       }
-      // rtl 镜像 ElFormItem -end
       return ret;
     },
     form: function form() {
@@ -23723,7 +23712,6 @@ tab_barvue_type_template_id_2031f33a_render._withStripped = true
             return L.toUpperCase();
           });
         };
-        // TODO: rtl 镜像 TabBar 有更新需要重写
         this.tabs.every(function (tab, index) {
           var $el = Object(util_["arrayFind"])(_this.$parent.$refs.tabs || [], function (t) {
             return t.id.replace('tab-', '') === tab.paneName;
@@ -25695,8 +25683,7 @@ var tree_nodevue_type_template_id_3ba3ef0e_render = function() {
                 expanded: !_vm.node.isLeaf && _vm.expanded
               },
               "el-tree-node__expand-icon",
-              _vm.tree.iconClass ? _vm.tree.iconClass : _vm.treeIcon
-              // TODO: rtl 镜像 ElTreeNode -end
+              _vm.tree.iconClass ? _vm.tree.iconClass : "el-icon-caret-right"
             ],
             on: {
               click: function($event) {
@@ -25913,9 +25900,7 @@ tree_nodevue_type_template_id_3ba3ef0e_render._withStripped = true
       expanded: false,
       childNodeRendered: false,
       oldChecked: null,
-      oldIndeterminate: null,
-      // TODO: rtl 镜像 ElTreeNode -start
-	    treeIcon:  Object(util_["isRtl"])()? 'el-icon-caret-left' : 'el-icon-caret-right',
+      oldIndeterminate: null
     };
   },
 
@@ -27513,15 +27498,7 @@ buttonvue_type_template_id_e72d2ad2_render._withStripped = true
       return this.$parent.precision;
     },
     currentPosition: function currentPosition() {
-      // return (this.value - this.min) / (this.max - this.min) * 100 + '%';
-      // TODO: rtl 镜像 ElSlider -start
-      var newVal = (this.value - this.min) / (this.max - this.min) * 100;
-      if (Object(util_["isRtl"])()) {
-        // console.log('newPosition-- currentPosition', this.newPosition, newVal, 100 - newVal);
-        return newVal == 0 ? '100%' : (100 - newVal) + '%';
-      }
-      // rtl 镜像 ElSlider -end
-      return newVal + '%';
+      return (this.value - this.min) / (this.max - this.min) * 100 + '%';
     },
     enableFormat: function enableFormat() {
       return this.$parent.formatTooltip instanceof Function;
@@ -27590,10 +27567,6 @@ buttonvue_type_template_id_e72d2ad2_render._withStripped = true
         this.startX = event.clientX;
       }
       this.startPosition = parseFloat(this.currentPosition);
-      // TODO: rtl 镜像 ElSlider -start
-      // console.log('点击start', this.currentPosition, this.startPosition);
-      if (Object(util_["isRtl"])()) this.startPosition = 100 - this.startPosition;
-      // rtl 镜像 ElSlider -end
       this.newPosition = this.startPosition;
     },
     onDragging: function onDragging(event) {
@@ -27613,11 +27586,6 @@ buttonvue_type_template_id_e72d2ad2_render._withStripped = true
           this.currentX = event.clientX;
           diff = (this.currentX - this.startX) / this.$parent.sliderSize * 100;
         }
-        // TODO: rtl 镜像 ElSlider -start
-        Object(util_["isRtl"])() ? this.newPosition = this.startPosition - diff : this.newPosition = this.startPosition + diff;
-        if (this.newPosition < 0) this.newPosition = 0;
-        if (this.newPosition > 100) this.newPosition = 100;
-        // rtl 镜像 ElSlider -end
         this.newPosition = this.startPosition + diff;
         this.setPosition(this.newPosition);
       }
@@ -27994,12 +27962,7 @@ src_button_component.options.__file = "packages/slider/src/button.vue"
         this.setPosition((sliderOffsetBottom - event.clientY) / this.sliderSize * 100);
       } else {
         var sliderOffsetLeft = this.$refs.slider.getBoundingClientRect().left;
-        // TODO: rtl ElSlider -start
-        // this.setPosition((event.clientX - sliderOffsetLeft) / this.sliderSize * 100);
-        var newPosition = (event.clientX - sliderOffsetLeft) / this.sliderSize * 100;
-        if (Object(util_["isRtl"])()) newPosition = 100 - newPosition;
-        this.setPosition(newPosition);
-        // rtl ElSlider -end
+        this.setPosition((event.clientX - sliderOffsetLeft) / this.sliderSize * 100);
       }
       this.emitChange();
     },
@@ -28088,23 +28051,13 @@ src_button_component.options.__file = "packages/slider/src/button.vue"
       return this.vertical ? { height: this.height } : {};
     },
     barStyle: function barStyle() {
-      // TODO: rtl ElSlider -start
-      if (this.vertical) {
-        return { height: this.barSize, bottom: this.barStart }
-      }
-      if (Object(util_["isRtl"])()) {
-        return { width: this.barSize, right: this.barStart }
-      } else {
-        return { width: this.barSize, left: this.barStart }
-      }
-      // return this.vertical ? {
-      //   height: this.barSize,
-      //   bottom: this.barStart
-      // } : {
-      //   width: this.barSize,
-      //   left: this.barStart
-      // };
-      // rtl ElSlider -end
+      return this.vertical ? {
+        height: this.barSize,
+        bottom: this.barStart
+      } : {
+        width: this.barSize,
+        left: this.barStart
+      };
     },
     sliderDisabled: function sliderDisabled() {
       return this.disabled || (this.elForm || {}).disabled;
@@ -32413,9 +32366,7 @@ function renderThumbStyle(_ref) {
       sizeWidth: '0',
       sizeHeight: '0',
       moveX: 0,
-      moveY: 0,
-      // TODO: rtl ElScrollbar
-	    margin: Object(util_["isRtl"])() ? 'margin-left' : 'margin-right'
+      moveY: 0
     };
   },
 
@@ -32432,10 +32383,7 @@ function renderThumbStyle(_ref) {
 
     if (gutter) {
       var gutterWith = '-' + gutter + 'px';
-      // TODO: rtl ElScrollbar 滚动条兼容处理 -start
-      // var gutterStyle = 'margin-bottom: ' + gutterWith + '; margin-right: ' + gutterWith + ';';
-	    var gutterStyle = 'margin-bottom: ' + gutterWith + ';' + this.margin + ':' + gutterWith + ';';
-      // rtl ElScrollbar -end
+      var gutterStyle = 'margin-bottom: ' + gutterWith + '; margin-right: ' + gutterWith + ';';
 
       if (Array.isArray(this.wrapStyle)) {
         style = Object(util_["toObject"])(this.wrapStyle);
