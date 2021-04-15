@@ -148,3 +148,21 @@ const resetData = () => {
 };
 
 getFile();
+
+
+/**
+ * 步骤：
+ * 1.过滤出对应文件
+ * 2.方向词对换（left->right)
+ * 3.针对包含有left:xx; 的代码 新增left：auto/right:auto
+
+ * 4.不需要替换的代码：
+ */
+
+  // .el-checkbox__inner::after {
+  //   border-right: 0;
+  //   right: 4px;
+  // }
+  // .el-radio__inner::after {
+  //   right: 50%;
+  // }
