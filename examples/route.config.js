@@ -2,6 +2,11 @@ import navConfig from './nav.config';
 import langs from './i18n/route';
 
 const LOAD_MAP = {
+  'ar': name => {
+    return r => require.ensure([], () =>
+      r(require(`./pages/ar/${name}.vue`)),
+    'ar');
+  },
   'zh-CN': name => {
     return r => require.ensure([], () =>
       r(require(`./pages/zh-CN/${name}.vue`)),
@@ -29,6 +34,11 @@ const load = function(lang, path) {
 };
 
 const LOAD_DOCS_MAP = {
+  'ar': path => {
+    return r => require.ensure([], () =>
+      r(require(`./docs/ar${path}.md`)),
+    'ar');
+  },
   'zh-CN': path => {
     return r => require.ensure([], () =>
       r(require(`./docs/zh-CN${path}.md`)),
@@ -176,6 +186,8 @@ if (userLanguage.indexOf('zh-') !== -1) {
   defaultPath = '/es';
 } else if (userLanguage.indexOf('fr') !== -1) {
   defaultPath = '/fr-FR';
+} else if (userLanguage.indexOf('ar') !== -1) {
+  defaultPath = '/ar';
 }
 
 route = route.concat([{

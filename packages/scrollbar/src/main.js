@@ -2,7 +2,7 @@
 
 import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event';
 import scrollbarWidth from 'element-ui/src/utils/scrollbar-width';
-import { toObject } from 'element-ui/src/utils/util';
+import { toObject, isRtl } from 'element-ui/src/utils/util';
 import Bar from './bar';
 
 /* istanbul ignore next */
@@ -29,7 +29,10 @@ export default {
       sizeWidth: '0',
       sizeHeight: '0',
       moveX: 0,
-      moveY: 0
+      moveY: 0,
+      // TODO: rtl ElScrollbar 滚动条 -- start
+      margin: isRtl() ? 'margin-left' : 'margin-right'
+      // rtl ElScrollbar 滚动条 -- end
     };
   },
 
@@ -45,7 +48,9 @@ export default {
 
     if (gutter) {
       const gutterWith = `-${gutter}px`;
-      const gutterStyle = `margin-bottom: ${gutterWith}; margin-right: ${gutterWith};`;
+      // TODO: rtl ElScrollbar 滚动条 -- start
+      const gutterStyle = `margin-bottom: ${gutterWith}; ${this.margin}: ${gutterWith};`;
+      // rtl ElScrollbar 滚动条 -- end
 
       if (Array.isArray(this.wrapStyle)) {
         style = toObject(this.wrapStyle);
@@ -121,6 +126,7 @@ export default {
     if (this.native) return;
     this.$nextTick(this.update);
     !this.noresize && addResizeListener(this.$refs.resize, this.update);
+    console.log('isRtl----', isRtl());
   },
 
   beforeDestroy() {

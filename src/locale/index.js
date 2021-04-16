@@ -41,12 +41,15 @@ export const use = function(l, langStr) {
   lang = l || lang;
   let bodyClass = document.getElementsByTagName('body')[0].classList;
   const classArr = bodyClass.value.split(' ');
-  if (!langStr) return;
-  if (langStr === 'ar') {
+  if (langStr && langStr === 'ar') {
+    bodyClass.remove('element-ltr');
     const index = classArr.findIndex(el => el === 'element-rtl');
     if (index === -1) bodyClass.add('element-rtl');
   } else {
-    bodyClass.remove('element-rtl');
+    const rtlI = classArr.findIndex(el => el === 'element-rtl');
+    if (rtlI >= 0) bodyClass.remove('element-rtl');
+    const j = classArr.findIndex(el => el === 'element-ltr');
+    if (j === -1) bodyClass.add('element-ltr');
   }
 };
 

@@ -10,6 +10,7 @@
 
 <script>
   import { use } from 'main/locale';
+  import arLocale from 'main/locale/lang/ar';
   import zhLocale from 'main/locale/lang/zh-CN';
   import enLocale from 'main/locale/lang/en';
   import esLocale from 'main/locale/lang/es';
@@ -17,6 +18,7 @@
 
   const lang = location.hash.replace('#', '').split('/')[1] || 'zh-CN';
   const localize = lang => {
+    document.documentElement.style.direction = 'ltr';
     switch (lang) {
       case 'zh-CN':
         use(zhLocale);
@@ -26,6 +28,10 @@
         break;
       case 'fr-FR':
         use(frLocale);
+        break;
+      case 'ar':
+        document.documentElement.style.direction = 'rtl';
+        use(arLocale, 'ar');
         break;
       default:
         use(enLocale);

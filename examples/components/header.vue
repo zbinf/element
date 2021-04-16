@@ -311,9 +311,9 @@
 
         <!-- nav -->
         <ul class="nav">
-          <li class="nav-item nav-algolia-search" v-show="isComponentPage">
+          <!-- <li class="nav-item nav-algolia-search" v-show="isComponentPage">
             <algolia-search></algolia-search>
-          </li>
+          </li> -->
           <li class="nav-item">
             <router-link
               active-class="active"
@@ -419,6 +419,7 @@
         verDropdownVisible: true,
         langDropdownVisible: true,
         langs: {
+          'ar': '阿语',
           'zh-CN': '中文',
           'en-US': 'English',
           'es': 'Español',
@@ -473,6 +474,14 @@
         if (this.lang === targetLang) return;
         localStorage.setItem('ELEMENT_LANGUAGE', targetLang);
         this.$router.push(this.$route.path.replace(this.lang, targetLang));
+        // var bodyClass = document.getElementsByTagName('body')[0].classList;
+        // if (targetLang === 'ar') {
+        //   document.documentElement.style.direction = 'rtl';
+        //   bodyClass.add('element-rtl');
+        // } else {
+        //   bodyClass.remove('element-rtl');
+        //   document.documentElement.style.direction = 'ltr';
+        // }
       },
 
       handleVerDropdownToggle(visible) {
